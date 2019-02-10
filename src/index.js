@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import '../src/assets/icons/icomoon/style.css'
 import App from './containers/app';
 import * as serviceWorker from './serviceWorker';
 

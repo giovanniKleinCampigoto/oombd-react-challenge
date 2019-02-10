@@ -14,7 +14,6 @@ const StyledHeader = styled.section`
     maring: 0 15px;l
     width: 100vw;
     height: 70px;
-    border-bottom: 1px solid #000099;
     background: #000066;
 `
 

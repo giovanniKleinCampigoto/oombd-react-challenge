@@ -35,7 +35,8 @@ const Description = styled.div`
 `
 
 const MovieTitle = styled.p`
-    font-size: 1em;
+    padding: 0 5px;
+    font-size: .9em;
     font-weight: bold;
 `
 

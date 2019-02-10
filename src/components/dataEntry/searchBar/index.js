@@ -51,11 +51,21 @@ const NotFound = styled.div`
     color: #000;
 `
 
-const More = styled.span`
-    display: block;
+const LinkWrapper = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
     margin-top: 15px;
+    font-size: 0.8em;
+`
+
+const More = styled.span`   
     text-decoration: underline;
     cursor: pointer;
+`
+
+const AndMore = styled.span`
+    color: #333;
 `
 
 class SearchBar extends Component {
@@ -66,6 +76,7 @@ class SearchBar extends Component {
         noResultsFound: false,
         hideBox: true,
         errorMessage: "",
+        totalResults: "",
         movies: []
     }
 
@@ -120,10 +131,13 @@ class SearchBar extends Component {
                 throw new Error(response.data.Error);
             }
 
+            console.log(response.data)
+
             this.setState({
                 previousSearch: value,
                 loading: false,
-                movies: Array.isArray(response.data.Search) ? response.data.Search.slice(0, 5) : [response.data.Search]
+                movies: Array.isArray(response.data.Search) ? response.data.Search.slice(0, 5) : [response.data.Search],
+                totalResults: response.data.totalResults
             });
         } catch (e) {
             this.setState({
@@ -150,7 +164,10 @@ class SearchBar extends Component {
             return (
                 <ResultBox hide={this.state.hideBox}>                
                     {this.renderItem()}
-                    <More>See the full list...</More>
+                    <LinkWrapper>
+                        <AndMore>And more {this.state.totalResults}...</AndMore>
+                        <More>See the full list!</More>
+                    </LinkWrapper>
                 </ResultBox>
             )
         }

@@ -1,13 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import Grid from '../../components/layout/grid';
+
 const Wrapper = styled.section`
 
 `
 const NotFound = () => (
-    <Wrapper>
+    <Grid>
         <h1>404!</h1>
-    </Wrapper>
+    </Grid>
 )
 
 export default NotFound;

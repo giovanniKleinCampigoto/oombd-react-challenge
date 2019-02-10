@@ -137,7 +137,8 @@ class MobileSearchBar extends Component {
             }, () => this.props.results(returnedObject));
         } catch (e) {
             this.setState({
-                loading: false
+                loading: false,
+                previousSearch: ""
             }, () => this.props.results({movies: [], error: e.message }))
             console.error(e);
         }

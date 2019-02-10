@@ -16,6 +16,27 @@ const MediaWrapper = styled.div`
     }
 `
 
+const LinkWrapper = styled.div`
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 15px;
+`
+
+const TotalResults = styled.p`
+    margin: 0;
+    font-size: 1em;
+    color: white;
+    font-weight: bold;
+`
+
+const ClickHere = styled.a`
+    font-size: 1em;
+    color: white;
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+`
+
 const MovieWrapper = styled.div`
 
 `
@@ -37,7 +58,8 @@ class MobileHome extends Component {
         if(val.error) {
             this.setState({
                 movies: val.movies,
-                error: val.error
+                error: val.error,
+                totalResults: ""
             })
         } else {
             this.setState({
@@ -75,6 +97,14 @@ class MobileHome extends Component {
                 <MobileSearchBar
                     service={SearchMovieService}
                     results={this.getResults}/>
+                    <LinkWrapper>
+                        <TotalResults>
+                            {this.state.totalResults ? `Total Results: ${this.state.totalResults}` : null}
+                        </TotalResults>
+                        <ClickHere>
+                            {this.state.totalResults ? `Full list here!` : null}                        
+                        </ClickHere>
+                    </LinkWrapper>
                     <MediaWrapper>
                         {this.renderMovies()}
                     </MediaWrapper>

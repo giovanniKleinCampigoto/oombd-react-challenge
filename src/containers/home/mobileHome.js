@@ -11,6 +11,9 @@ const MobileWrapper = styled.section`
 `
 
 const MediaWrapper = styled.div`
+   @media only screen and (min-width: 768px) {
+        columns: 2;
+    }
 `
 
 const MovieWrapper = styled.div`
@@ -57,7 +60,9 @@ class MobileHome extends Component {
                             <Movie
                                 key={index}
                                 img={el.Poster}
-                                name={el.Title}/>
+                                name={el.Title}
+                                type={el.Type}
+                                year={el.Year}/>
                         ))
                     }
                 </MovieWrapper>

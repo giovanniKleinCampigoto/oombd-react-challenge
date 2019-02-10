@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import Grid from '../../components/layout/grid';
-import MobileSearchBar  from '../../components/dataEntry/mobileSearchBar';
 
-import SearchMovieService from '../../services/searchMovie';
+
+import DesktopHome from './desktopHome';
+import MobileHome from './mobileHome';
 
 const HomeWrapper = styled.section`
     min-height: 100vh;
@@ -14,12 +15,19 @@ const HomeWrapper = styled.section`
 class Home extends Component {
     state = {  }
 
+    decideHomeRender () {
+        if(window.innerWidth > 1024) {
+            return <DesktopHome/>
+        } else {
+            return <MobileHome/>
+        }
+    }
+
     render() {
         return (
             <Grid>
                 <HomeWrapper>        
-                    <MobileSearchBar
-                        service={SearchMovieService}/>
+                    {this.decideHomeRender()}
                 </HomeWrapper>
             </Grid>                
         );

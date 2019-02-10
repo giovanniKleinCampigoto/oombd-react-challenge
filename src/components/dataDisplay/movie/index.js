@@ -13,13 +13,16 @@ const ItemWrapper = styled.div`
 `
 
 const Image = styled.img` 
+    width: 100px;
+    height: 125px;
 `
 
 const DescriptionWrapper = styled.div`
     display: flex;
     flex-direction: row;
-    align-items: center;
-    width: 85%;
+    align-items: flex-start;
+    padding: 15px;
+    width: 100%;
     cursor: pointer;
 `
 
@@ -33,7 +36,8 @@ const Description = styled.div`
 
 const MovieTitle = styled.p`
     padding: 0 5px;
-    font-size: .9em;
+    font-size: 1em;
+    color: white;
     font-weight: bold;
 `
 
@@ -44,8 +48,8 @@ const Year = styled.p`
 
 const Movie = ({ className, name, img, year, onClick }) => (
     <ItemWrapper className={className}>
-        {img ? <Image src={img} alt={name}/> : null}
         <DescriptionWrapper onClick={onClick}>
+            {img ? <Image src={img} alt={name}/> : null}
             <Description>
                 <MovieTitle>{name}</MovieTitle>
                 <Year>{year}</Year>

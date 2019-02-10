@@ -6,17 +6,20 @@ import Icon from '../../general/icon';
 import Item from '../../dataDisplay/item';
 
 const SearchBarWrapper = styled.div`
+    display: flex;
+    justify-content: center;
     position: relative;
+    margin-bottom: 15px;
     width: ${props => props.width ? props.width : '250px' };
-    transition: width 1.5s ease-in-out;
+    transition: width .5s ease-in-out;
 `
 const SearchIcon = styled(Icon)`
     position: absolute;
     top: 10px;
-    right: ${props => props.shrink ? '5px' : '30px'};
+    right: ${props => props.shrink ? '5px' : '15px'};
     color: #ccc;
     font-size: 1.1em;
-    transition: right 1.5s ease-in-out;
+    transition: right .5s ease-in-out;
 `
 const SearchBarInput = styled(Input)`
     display: block;
@@ -26,11 +29,11 @@ const SearchBarInput = styled(Input)`
 const InfiniteSpinner = styled(Icon)`
     position: absolute;
     top: 10px;
-    right: ${props => props.shrink ? '5px' : '30px'};
+    right: ${props => props.shrink ? '5px' : '15px'};
     color: #ccc;
     font-size: 1.1em;
     animation: spin 2s linear infinite;
-    transition: right 1.5s ease-in-out;
+    transition: right .5s ease-in-out;
     @keyframes spin {
         0% { transform: rotate(0deg); }
         100% {  transform: rotate(359deg); }
@@ -75,9 +78,6 @@ class MobileSearchBar extends Component {
         shrink: true,
         previousSearch: "",
         loading: false,
-        noResultsFound: false,
-        errorMessage: "",
-        totalResults: "",
         movies: []
     }
     
@@ -104,23 +104,20 @@ class MobileSearchBar extends Component {
     search = async (value) => {  
         const { props: { service }, props, state: { previousSearch } } = this;
 
-
         if(!value.length) {
             this.setState({
                 previousSearch: "",
                 loading: false,
-                noResultsFound: false,
-                errorMessage: "",
                 movies: []
             })
+            return
         }
 
         if (value === previousSearch) return
 
         try {
             this.setState({
-                loading: true,
-                noResultsFound: false
+                loading: true
             })
 
             const response = await service.searchMovie(value);
@@ -130,20 +127,18 @@ class MobileSearchBar extends Component {
             }
 
             const returnedObject = {
-                movies: Array.isArray(response.data.Search) ? response.data.Search.slice(0, 5) : [response.data.Search],
+                movies: Array.isArray(response.data.Search) ? response.data.Search : [response.data.Search],
                 totalResults: response.data.totalResults
             }
 
             this.setState({
                 previousSearch: value,
                 loading: false
-            });
+            }, () => this.props.results(returnedObject));
         } catch (e) {
             this.setState({
-                loading: false,
-                noResultsFound: true,
-                errorMessage: e.message
-            })
+                loading: false
+            }, () => this.props.results({movies: [], error: e.message }))
             console.error(e);
         }
     }

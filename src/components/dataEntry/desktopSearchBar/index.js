@@ -115,6 +115,7 @@ class DesktopSearchBar extends Component {
                 errorMessage: "",
                 movies: []
             })
+            return
         }
 
         if (value === previousSearch) return

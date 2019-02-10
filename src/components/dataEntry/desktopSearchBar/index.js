@@ -68,7 +68,7 @@ const AndMore = styled.span`
     color: #333;
 `
 
-class SearchBar extends Component {
+class DesktopSearchBar extends Component {
     state = { 
         shrink: true,
         previousSearch: "",
@@ -130,8 +130,6 @@ class SearchBar extends Component {
             if(response.data.Response === "False") {
                 throw new Error(response.data.Error);
             }
-
-            console.log(response.data)
 
             this.setState({
                 previousSearch: value,
@@ -199,4 +197,4 @@ class SearchBar extends Component {
     }
 }
 
-export default SearchBar;
+export default DesktopSearchBar;

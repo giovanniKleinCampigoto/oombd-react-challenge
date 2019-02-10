@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import logo from '../../../assets/logo/logo.svg';
 
-import SearchBar from '../../dataEntry/searchBar';
-import Item from '../../dataDisplay/item';
+import DesktopSearchBar from '../../dataEntry/desktopSearchBar';
 import SearchMovieService from '../../../services/searchMovie';
 
 
@@ -48,7 +47,7 @@ const TitleSecondPart = styled.span`
     color: #aaa;
 `
 
-const StyledSearchBar = styled(SearchBar)`
+const StyledSearchBar = styled(DesktopSearchBar)`
     display: ${window.innerWidth < 1024 ? 'none' :  'block'};
 `
 

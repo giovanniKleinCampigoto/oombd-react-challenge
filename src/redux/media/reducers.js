@@ -2,7 +2,8 @@
 import {
     FETCH_MOVIES,
     SET_CURRENT_PAGE,
-    SET_PAGE_RESULTS
+    SET_PAGE_RESULTS,
+    SET_SINGLE_MEDIA
 } from './types';
 
 const initialState = {
@@ -14,13 +15,16 @@ const initialState = {
         currentPage: "",
         currentTerm: ""
     },
-    singleMedia: {
-        
-    }
+    singleMedia: ""
 }
 
 const media = (state = initialState, action) => {   
     switch (action.type) {       
+        case SET_SINGLE_MEDIA.SUCCESS:
+            return {
+                ...state,
+                singleMedia: action.payload.singleMedia
+            }
         case SET_PAGE_RESULTS.SUCCESS:
             return {
                 ...state,

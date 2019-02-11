@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import MobileSearchBar  from '../../components/dataEntry/mobileSearchBar';
@@ -10,7 +9,8 @@ import Movie from '../../components/dataDisplay/movie';
 import SearchMovieService from '../../services/searchMovie';
 
 import { 
-    FETCH_MOVIES
+    FETCH_MOVIES,
+    SET_SINGLE_MEDIA
 } from '../../redux/media/types';
  
 const MobileWrapper = styled.section`
@@ -84,6 +84,23 @@ class MobileHome extends Component {
 
     }
 
+    fetchMediaDetails = async (title) => {
+        const { dispatch, history: { push } } = this.props;
+
+        try {
+            const response = await SearchMovieService.searhMovieDetails(title);
+            dispatch({
+                type: SET_SINGLE_MEDIA.SUCCESS,
+                payload: {
+                    singleMedia: response.data
+                }
+            })
+            push('/singleMedia')
+        } catch(e) {
+            console.error(e)
+        } 
+    }
+
     renderMovies () {
         const { mediaReducer : { movies }} = this.props
 
@@ -100,6 +117,7 @@ class MobileHome extends Component {
                         {
                             movies.results.map((el, index) => (
                                 <Movie
+                                    onClick={() => this.fetchMediaDetails(el.Title)}
                                     key={index}
                                     img={el.Poster}
                                     name={el.Title}
@@ -146,4 +164,4 @@ function mapStateToProps(state) {
     }
 } 
 
-export default connect(mapStateToProps)(MobileHome);
+export default withRouter(connect(mapStateToProps)(MobileHome));

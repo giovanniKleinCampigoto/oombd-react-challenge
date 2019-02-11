@@ -9,6 +9,10 @@ class SearchMovieService {
     static searchMoviePage(term, page) {
         return Api.get(`&s=${term}&page=${page}`);
     }
+
+    static searhMovieDetails(title) {
+        return Api.get(`&t=${title}`);
+    }
 }
 
 export default SearchMovieService;

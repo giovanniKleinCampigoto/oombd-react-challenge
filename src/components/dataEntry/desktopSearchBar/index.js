@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
+import { FETCH_MOVIES } from '../../../redux/media/types' ;
 
 import Input from '../input';
 import Icon from '../../general/icon';
@@ -59,7 +63,7 @@ const LinkWrapper = styled.div`
     font-size: 0.8em;
 `
 
-const More = styled.span`   
+const More = styled.a`   
     text-decoration: underline;
     cursor: pointer;
 `
@@ -88,12 +92,14 @@ class DesktopSearchBar extends Component {
     }
 
     decreaseSize () {
-        this.setState({
-            shrink: true,
-            hideBox: true
-        })
+        // Maybe bad?
+        setTimeout(() => {
+            this.setState({
+                shrink: true,
+                hideBox: true
+            })
+        }, 300)        
     }
-
     
     debounce (value) {        
         // Need to improve...
@@ -103,8 +109,13 @@ class DesktopSearchBar extends Component {
         }, 1000);
     }
 
+    pushToFullList = () => {
+        const { history: { push }} = this.props
+        push('/fullList');        
+    }
+
     search = async (value) => {  
-        const { props: { service }, props, state: { previousSearch } } = this;
+        const { props: { service, dispatch }, props, state: { previousSearch } } = this;
 
 
         if(!value.length) {
@@ -137,22 +148,38 @@ class DesktopSearchBar extends Component {
                 loading: false,
                 movies: Array.isArray(response.data.Search) ? response.data.Search.slice(0, 5) : [response.data.Search],
                 totalResults: response.data.totalResults
+            }, () => {
+                dispatch({
+                    type: FETCH_MOVIES.SUCCESS,
+                    payload: {
+                        results: response.data.Search,
+                        totalResults: this.state.totalResults,
+                        pages: Math.floor(this.state.totalResults / 10)
+                    }
+                })
             });
         } catch (e) {
             this.setState({
                 loading: false,
                 noResultsFound: true,
                 errorMessage: e.message
+            }, () => {
+                dispatch({
+                    type: FETCH_MOVIES.FAILURE,
+                    payload: {
+                       error: e.message
+                    }
+                })
             })
             console.error(e);
         }
     }
 
-    renderResultBox = () => {
-
+    renderResultBox () {
+    
         if (this.state.noResultsFound) {
             return  (
-                <ResultBox hide={this.state.hideBox}>
+                <ResultBox hide={this.state.hideBox} onClick={e => console.log}>
                     <NotFound>{this.state.errorMessage}</NotFound>
                 </ResultBox>
             )
@@ -165,7 +192,7 @@ class DesktopSearchBar extends Component {
                     {this.renderItem()}
                     <LinkWrapper>
                         <AndMore>And more {this.state.totalResults}...</AndMore>
-                        <More>See the full list!</More>
+                        <More onClick={this.pushToFullList}>See the full list!</More>
                     </LinkWrapper>
                 </ResultBox>
             )
@@ -174,6 +201,7 @@ class DesktopSearchBar extends Component {
 
     renderItem = () => this.state.movies.map((element, index) => (
         <Item 
+            onClick={() => console.log(element)}
             name={element.Title}
             year={element.Year}
             img={element.Poster}
@@ -198,4 +226,4 @@ class DesktopSearchBar extends Component {
     }
 }
 
-export default DesktopSearchBar;
+export default withRouter(connect(null)(DesktopSearchBar));

@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Grid from '../../components/layout/grid';
 import Movie from '../../components/dataDisplay/movie';
 import Pagination from '../../components/dataDisplay/pagination';
+import Button from '../../components/general/button';
 
 const FullListWrapper = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
+    padding: 15px;
 `
 
 const MediaWrapper = styled.div`
@@ -28,6 +30,10 @@ const ErrorMessage = styled.p`
     text-align: center;
     color: #fff;
 `
+
+const BackButton = styled(Button)`
+    align-self: flex-start;
+` 
 class FullResultsPage extends Component {
     state = {  }
 
@@ -54,7 +60,7 @@ class FullResultsPage extends Component {
         }
     }
     render() {
-        const { mediaReducer: { movies } } = this.props
+        const { mediaReducer: { movies }, history: { goBack } } = this.props
 
         return (
             <Grid>
@@ -63,6 +69,7 @@ class FullResultsPage extends Component {
                     <MediaWrapper>
                         {this.renderMovies()}
                     </MediaWrapper>
+                    {!movies.results.length ? null : <BackButton onClick={() => goBack()}>Back</BackButton>}                    
                 </FullListWrapper>
             </Grid>
         );
@@ -75,4 +82,4 @@ function mapStateToProps(state) {
     }
 } 
 
-export default connect(mapStateToProps)(FullResultsPage);
+export default withRouter(connect(mapStateToProps)(FullResultsPage));

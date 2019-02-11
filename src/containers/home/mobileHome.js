@@ -48,8 +48,13 @@ const MovieWrapper = styled.div`
 
 `
 
+const ErrorWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    align-content: center;
+`
+
 const ErrorMessage = styled.p`
-    text-align: center;
     color: #fff;
 `
 
@@ -82,21 +87,27 @@ class MobileHome extends Component {
         const { mediaReducer : { movies }} = this.props
 
         if(movies.error.length) {
-            return <ErrorMessage>{movies.error}</ErrorMessage>
+            return (
+                <ErrorWrapper>
+                    <ErrorMessage>{movies.error}</ErrorMessage>
+                </ErrorWrapper>
+            )
         } else {
             return (
-                <MovieWrapper>
-                    {
-                        movies.results.map((el, index) => (
-                            <Movie
-                                key={index}
-                                img={el.Poster}
-                                name={el.Title}
-                                type={el.Type}
-                                year={el.Year}/>
-                        ))
-                    }
-                </MovieWrapper>
+                <MediaWrapper>
+                    <MovieWrapper>
+                        {
+                            movies.results.map((el, index) => (
+                                <Movie
+                                    key={index}
+                                    img={el.Poster}
+                                    name={el.Title}
+                                    type={el.Type}
+                                    year={el.Year}/>
+                            ))
+                        }
+                    </MovieWrapper>
+                </MediaWrapper>
             )
         }
     }
@@ -108,17 +119,21 @@ class MobileHome extends Component {
                 <MobileSearchBar
                     service={SearchMovieService}
                     results={this.getResults}/>
-                    <LinkWrapper>
-                        <TotalResults>
-                            {movies.totalResults ? `Total Results: ${movies.totalResults}` : null}
-                        </TotalResults>
-                        <ClickHere to="/fullList">
-                            {movies.totalResults ? `Full list here!` : null}                        
-                        </ClickHere>
-                    </LinkWrapper>
-                    <MediaWrapper>
-                        {this.renderMovies()}
-                    </MediaWrapper>
+                    {
+                        movies.totalResults ?
+                        (
+                            <LinkWrapper>
+                                <TotalResults>
+                                    {`Total Results: ${movies.totalResults}`}
+                                </TotalResults>
+                                <ClickHere to="/fullList">
+                                    Full list here!
+                                </ClickHere>
+                            </LinkWrapper>
+                        )
+                        : null
+                    } 
+                    {this.renderMovies()}
             </MobileWrapper>
         );
     }

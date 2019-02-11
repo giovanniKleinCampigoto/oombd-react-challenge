@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
+import { connect } from 'react-redux';
 
 import MobileSearchBar  from '../../components/dataEntry/mobileSearchBar';
 import Movie from '../../components/dataDisplay/movie';
 
 import SearchMovieService from '../../services/searchMovie';
 
+import { 
+    FETCH_MOVIES
+} from '../../redux/media/types';
+ 
 const MobileWrapper = styled.section`
     max-width: inherit;
 `
@@ -29,7 +36,7 @@ const TotalResults = styled.p`
     font-weight: bold;
 `
 
-const ClickHere = styled.a`
+const ClickHere = styled(Link)`
     font-size: 1em;
     color: white;
     font-weight: bold;
@@ -62,6 +69,17 @@ class MobileHome extends Component {
                 totalResults: ""
             })
         } else {
+            const { dispatch } = this.props
+
+            dispatch({
+                type: FETCH_MOVIES.SUCCESS,
+                payload: {
+                    results: val.movies,
+                    totalResults: val.totalResults,
+                    pages: Math.floor(val.totalResults / 10)
+                }
+            })
+
             this.setState({
                 movies: val.movies,
                 totalResults: val.totalResults,
@@ -101,7 +119,7 @@ class MobileHome extends Component {
                         <TotalResults>
                             {this.state.totalResults ? `Total Results: ${this.state.totalResults}` : null}
                         </TotalResults>
-                        <ClickHere>
+                        <ClickHere to="/fullList">
                             {this.state.totalResults ? `Full list here!` : null}                        
                         </ClickHere>
                     </LinkWrapper>
@@ -113,4 +131,4 @@ class MobileHome extends Component {
     }
 }
 
-export default MobileHome;
+export default connect(null)(MobileHome);

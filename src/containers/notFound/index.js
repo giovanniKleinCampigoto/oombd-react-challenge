@@ -6,9 +6,15 @@ import Grid from '../../components/layout/grid';
 const Wrapper = styled.section`
 
 `
+
+const PageHeader = styled.h1`
+    font-size: 2em;
+    color: white;
+    font-weight: bold;
+`
 const NotFound = () => (
     <Grid>
-        <h1>404!</h1>
+        <PageHeader>404! Page not found!</PageHeader>
     </Grid>
 )
 

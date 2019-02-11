@@ -154,7 +154,8 @@ class DesktopSearchBar extends Component {
                     payload: {
                         results: response.data.Search,
                         totalResults: this.state.totalResults,
-                        pages: Math.floor(this.state.totalResults / 10)
+                        pages: Math.floor(this.state.totalResults / 10),
+                        currentTerm: value
                     }
                 })
             });
@@ -179,7 +180,7 @@ class DesktopSearchBar extends Component {
     
         if (this.state.noResultsFound) {
             return  (
-                <ResultBox hide={this.state.hideBox} onClick={e => console.log}>
+                <ResultBox hide={this.state.hideBox}>
                     <NotFound>{this.state.errorMessage}</NotFound>
                 </ResultBox>
             )

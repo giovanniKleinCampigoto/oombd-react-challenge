@@ -8,6 +8,13 @@ import Movie from '../../components/dataDisplay/movie';
 import Pagination from '../../components/dataDisplay/pagination';
 import Button from '../../components/general/button';
 
+import SearchMovieService from '../../services/searchMovie';
+
+import {
+    SET_CURRENT_PAGE,
+    SET_PAGE_RESULTS
+} from '../../redux/media/types';
+
 const FullListWrapper = styled.div`
     display: flex;
     align-items: center;
@@ -37,6 +44,39 @@ const BackButton = styled(Button)`
 class FullResultsPage extends Component {
     state = {  }
 
+    getPage = val => {
+        const { dispatch, mediaReducer: { movies } } = this.props
+
+        if(val === movies.currentPage) return
+
+        dispatch({
+            type: SET_CURRENT_PAGE.SUCCESS,
+            payload: {
+                currentPage: val
+            }
+        })
+
+        this.fetchPage(val)
+    }
+
+    fetchPage = async (page) => {
+        const { mediaReducer: { movies }, dispatch } = this.props
+       
+        try {
+
+            const response = await SearchMovieService.searchMoviePage(movies.currentTerm, page);
+
+            dispatch({
+                type: SET_PAGE_RESULTS.SUCCESS,
+                payload: {
+                    results: response.data.Search
+                }
+            })
+        } catch(e) {
+            console.error(e)
+        }
+    }
+
     renderMovies () {
         const { mediaReducer: { movies } } = this.props
 
@@ -65,7 +105,7 @@ class FullResultsPage extends Component {
         return (
             <Grid>
                 <FullListWrapper>
-                    {!movies.results.length ? null : <Pagination currentPage={movies.currentPage} totalPageNumber={movies.pages}/>}
+                    {!movies.results.length ? null : <Pagination nextPage={this.getPage} previousPage={this.getPage} currentPage={movies.currentPage} totalPageNumber={movies.pages}/>}
                     <MediaWrapper>
                         {this.renderMovies()}
                     </MediaWrapper>

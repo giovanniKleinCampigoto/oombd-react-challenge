@@ -76,7 +76,8 @@ class MobileHome extends Component {
                 payload: {
                     results: val.movies,
                     totalResults: val.totalResults,
-                    pages: Math.floor(val.totalResults / 10)
+                    pages: Math.floor(val.totalResults / 10),
+                    currentTerm: val.currentTerm
                 }
             })
         }

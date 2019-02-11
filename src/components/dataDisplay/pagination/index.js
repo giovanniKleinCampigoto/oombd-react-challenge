@@ -27,11 +27,11 @@ const LeftArrow = styled(Arrow)`
     transform: rotate(180deg);
 `
 
-const Pagination = ({ currentPage, totalPageNumber }) => (
+const Pagination = ({ currentPage, totalPageNumber, previousPage, nextPage }) => (
     <PaginationWrapper>
-        <LeftArrow icon="play3"/>
+        <LeftArrow icon="play3" onClick={() => previousPage(currentPage - 1  === 0 ? 1 : currentPage - 1)}/>
             <PageNumbers>{`${currentPage} of ${totalPageNumber}`}</PageNumbers>
-        <Arrow icon="play3"/>
+        <Arrow icon="play3" onClick={() => nextPage(currentPage + 1  > totalPageNumber ? totalPageNumber : currentPage + 1)}/>
     </PaginationWrapper>
 )
 

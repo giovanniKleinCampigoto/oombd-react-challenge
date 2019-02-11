@@ -128,7 +128,8 @@ class MobileSearchBar extends Component {
 
             const returnedObject = {
                 movies: Array.isArray(response.data.Search) ? response.data.Search : [response.data.Search],
-                totalResults: response.data.totalResults
+                totalResults: response.data.totalResults,
+                currentTerm: value
             }
 
             this.setState({

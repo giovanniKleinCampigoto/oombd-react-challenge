@@ -54,23 +54,18 @@ const ErrorMessage = styled.p`
 `
 
 class MobileHome extends Component {
-    state = { 
-        movies: [],
-        totalResults: "",
-        error: ""
-    }
-
     getResults = val => {
+        const { dispatch } = this.props
 
         if(val.error) {
-            this.setState({
-                movies: val.movies,
-                error: val.error,
-                totalResults: ""
+            dispatch({
+                type: FETCH_MOVIES.FAILURE,
+                payload: {
+                   error: val.error
+                }
             })
         } else {
-            const { dispatch } = this.props
-
+        
             dispatch({
                 type: FETCH_MOVIES.SUCCESS,
                 payload: {
@@ -79,24 +74,20 @@ class MobileHome extends Component {
                     pages: Math.floor(val.totalResults / 10)
                 }
             })
-
-            this.setState({
-                movies: val.movies,
-                totalResults: val.totalResults,
-                error: ""
-            })
         }
 
     }
 
     renderMovies () {
-        if(this.state.error.length) {
-            return <ErrorMessage>{this.state.error}</ErrorMessage>
+        const { mediaReducer : { movies }} = this.props
+
+        if(movies.error.length) {
+            return <ErrorMessage>{movies.error}</ErrorMessage>
         } else {
             return (
                 <MovieWrapper>
                     {
-                        this.state.movies.map((el, index) => (
+                        movies.results.map((el, index) => (
                             <Movie
                                 key={index}
                                 img={el.Poster}
@@ -110,6 +101,8 @@ class MobileHome extends Component {
         }
     }
     render() {
+        const { mediaReducer : { movies }} = this.props
+
         return (
             <MobileWrapper>
                 <MobileSearchBar
@@ -117,10 +110,10 @@ class MobileHome extends Component {
                     results={this.getResults}/>
                     <LinkWrapper>
                         <TotalResults>
-                            {this.state.totalResults ? `Total Results: ${this.state.totalResults}` : null}
+                            {movies.totalResults ? `Total Results: ${movies.totalResults}` : null}
                         </TotalResults>
                         <ClickHere to="/fullList">
-                            {this.state.totalResults ? `Full list here!` : null}                        
+                            {movies.totalResults ? `Full list here!` : null}                        
                         </ClickHere>
                     </LinkWrapper>
                     <MediaWrapper>
@@ -131,4 +124,10 @@ class MobileHome extends Component {
     }
 }
 
-export default connect(null)(MobileHome);
+function mapStateToProps(state) {
+    return {
+        mediaReducer: state.media
+    }
+} 
+
+export default connect(mapStateToProps)(MobileHome);

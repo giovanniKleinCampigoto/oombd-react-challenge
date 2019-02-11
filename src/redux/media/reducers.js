@@ -9,7 +9,7 @@ const initialState = {
         totalResults: "",
         pages: "",
         error: "",
-        currentPage: 1
+        currentPage: ""
     }
 }
 
@@ -23,7 +23,21 @@ const media = (state = initialState, action) => {
                     results: action.payload.results ? action.payload.results : '',
                     totalResults: action.payload.totalResults ? action.payload.totalResults : '',
                     pages: action.payload.pages ? action.payload.pages : '',
-                    currentPage: action.payload.currentPage ? action.payload.currentPage : 1
+                    currentPage: action.payload.currentPage ? action.payload.currentPage : 1,
+                    error: ""
+                }
+            }
+            case FETCH_MOVIES.FAILURE:
+            return {
+                ...state,
+                movies: {
+                    ...state.movies,
+                    results: [],
+                    totalResults: "",
+                    pages: "",
+                    error: "",
+                    currentPage: "",
+                    error: action.payload.error
                 }
             }
         default:
@@ -31,4 +45,4 @@ const media = (state = initialState, action) => {
     }
 }  
 
-export default media;
+export default media;                                                                                                   

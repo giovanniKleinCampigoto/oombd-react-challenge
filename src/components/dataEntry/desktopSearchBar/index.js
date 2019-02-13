@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { FETCH_MOVIES } from '../../../redux/media/types' ;
+import { FETCH_MOVIES, SET_SINGLE_MEDIA } from '../../../redux/media/types' ;
 
 import Input from '../input';
 import Icon from '../../general/icon';
@@ -200,9 +200,26 @@ class DesktopSearchBar extends Component {
         }
     }
 
+    fetchMediaDetails = async (title) => {
+        const { dispatch, history: { push }, service } = this.props;
+
+        try {
+            const response = await service.searhMovieDetails(title);
+            dispatch({
+                type: SET_SINGLE_MEDIA.SUCCESS,
+                payload: {
+                    singleMedia: response.data
+                }
+            })
+            push('/singleMedia')
+        } catch(e) {
+            console.error(e)
+        } 
+    }    
+
     renderItem = () => this.state.movies.map((element, index) => (
         <Item 
-            onClick={() => console.log(element)}
+            onClick={() => this.fetchMediaDetails(element.Title)}
             name={element.Title}
             year={element.Year}
             img={element.Poster}

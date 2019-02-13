@@ -12,7 +12,8 @@ import SearchMovieService from '../../services/searchMovie';
 
 import {
     SET_CURRENT_PAGE,
-    SET_PAGE_RESULTS
+    SET_PAGE_RESULTS,
+    SET_SINGLE_MEDIA
 } from '../../redux/media/types';
 
 const FullListWrapper = styled.div`
@@ -77,6 +78,23 @@ class FullResultsPage extends Component {
         }
     }
 
+    fetchMediaDetails = async (title) => {
+        const { dispatch, history: { push } } = this.props;
+
+        try {
+            const response = await SearchMovieService.searhMovieDetails(title);
+            dispatch({
+                type: SET_SINGLE_MEDIA.SUCCESS,
+                payload: {
+                    singleMedia: response.data
+                }
+            })
+            push('/singleMedia')
+        } catch(e) {
+            console.error(e)
+        } 
+    }
+
     renderMovies () {
         const { mediaReducer: { movies } } = this.props
 
@@ -88,6 +106,7 @@ class FullResultsPage extends Component {
                     {
                         movies.results.map((el, index) => (
                             <Movie
+                                onClick={() => this.fetchMediaDetails(el.Title)}
                                 key={index}
                                 img={el.Poster}
                                 name={el.Title}
@@ -109,7 +128,7 @@ class FullResultsPage extends Component {
                     <MediaWrapper>
                         {this.renderMovies()}
                     </MediaWrapper>
-                    {!movies.results.length ? null : <BackButton onClick={() => goBack()}>Back</BackButton>}                    
+                    <BackButton onClick={() => goBack()}>Back</BackButton>
                 </FullListWrapper>
             </Grid>
         );

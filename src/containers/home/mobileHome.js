@@ -123,7 +123,7 @@ class MobileHome extends Component {
             })
 
             const response = await SearchMovieService.searhMovieDetails(title);
-            const youtubeInfo = await SerchMovieTrailer.searchMovieInfo(`${title} ${type} official trailer`);
+            const youtubeInfo = await SearchMovieTrailer.searchMovieInfo(`${title} ${type} official trailer`);
             const youtubeVideo = await SearchMovieTrailer.getMovieVideo(youtubeInfo.data.items[0].id.videoId)
 
             this.setState({

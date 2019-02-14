@@ -8,7 +8,6 @@ import Movie from '../../components/dataDisplay/movie';
 import Icon from '../../components/general/icon';
 
 import SearchMovieService from '../../services/searchMovie';
-import SerchMovieTrailer from '../../services/youtubeService';
 
 import { 
     FETCH_MOVIES,

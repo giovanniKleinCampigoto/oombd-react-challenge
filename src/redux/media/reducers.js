@@ -72,7 +72,6 @@ const media = (state = initialState, action) => {
                         results: [],
                         totalResults: "",
                         pages: "",
-                        error: "",
                         currentPage: "",
                         error: action.payload.error,
                         currentTerm: "",

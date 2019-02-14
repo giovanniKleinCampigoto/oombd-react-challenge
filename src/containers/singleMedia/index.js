@@ -43,9 +43,6 @@ const MediaTitle = styled.h1`
 const TitleWrapper = styled.span`
 `
 
-const Rated = styled.span`
-`
-
 const Runtime = styled.span`
     margin-left: 5px;
     font-size: 0.7em;

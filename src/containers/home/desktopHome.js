@@ -125,7 +125,6 @@ class DesktopHome extends Component {
     ))
 
     render() {
-        const { mediaReducer } = this.props
         return (
             <DesktopWrapper>
                 

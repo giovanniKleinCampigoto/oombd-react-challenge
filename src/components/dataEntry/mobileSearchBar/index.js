@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import Input from '../input';
 import Icon from '../../general/icon';
-import Item from '../../dataDisplay/item';
 
 const SearchBarWrapper = styled.div`
     display: flex;
@@ -41,38 +40,6 @@ const InfiniteSpinner = styled(Icon)`
       
 `
 
-const ResultBox = styled.div`
-    display: ${props => props.hide ? 'none' : 'block' };
-    position: absolute;
-    margin-top: 3px;
-    padding: 15px;
-    border-radius: 5px;
-    background: #fff;
-    width: 350px;
-    border: 1px solid #ccc;
-`
-
-const NotFound = styled.div`
-    color: #000;
-`
-
-const LinkWrapper = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-content: center;
-    margin-top: 15px;
-    font-size: 0.8em;
-`
-
-const More = styled.span`   
-    text-decoration: underline;
-    cursor: pointer;
-`
-
-const AndMore = styled.span`
-    color: #333;
-`
-
 class MobileSearchBar extends Component {
     state = { 
         shrink: true,
@@ -102,7 +69,7 @@ class MobileSearchBar extends Component {
     }
 
     search = async (value) => {  
-        const { props: { service }, props, state: { previousSearch } } = this;
+        const { props: { service }, state: { previousSearch } } = this;
 
         if(!value.length) {
             this.setState({

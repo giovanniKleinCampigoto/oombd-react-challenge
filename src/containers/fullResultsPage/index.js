@@ -114,7 +114,7 @@ class FullResultsPage extends Component {
     }
 
     fetchMediaDetails = async (title, type) => {
-        const { dispatch, history: { push }, service } = this.props;
+        const { dispatch, history: { push } } = this.props;
 
         try {
 

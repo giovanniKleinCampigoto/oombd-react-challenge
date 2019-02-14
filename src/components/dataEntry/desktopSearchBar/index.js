@@ -140,7 +140,7 @@ class DesktopSearchBar extends Component {
     }
 
     search = async (value) => {  
-        const { props: { service, dispatch }, props, state: { previousSearch } } = this;
+        const { props: { service, dispatch }, state: { previousSearch } } = this;
 
 
         if(!value.length) {

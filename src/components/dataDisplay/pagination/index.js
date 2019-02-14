@@ -12,6 +12,7 @@ const PaginationWrapper = styled.div`
     width: 300px;
     height: 50px;
     padding: 15px;
+    margin-bottom: 30px;
 `
 
 const PageNumbers = styled.span`

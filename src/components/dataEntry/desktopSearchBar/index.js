@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+import SearchMovieTrailer from '../../../services/youtubeService';
+
 import { FETCH_MOVIES, SET_SINGLE_MEDIA } from '../../../redux/media/types' ;
 
 import Input from '../input';
@@ -72,6 +74,28 @@ const AndMore = styled.span`
     color: #333;
 `
 
+const SpinnerContainer = styled.div`
+    display: flex;
+    justify-content: center;  
+`
+
+const AnimationContainer = styled.span`
+    margin: 0;
+    padding: 0;
+    width: 18px;
+    display: block;
+    animation: spin 2s linear infinite;
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% {  transform: rotate(359deg); }
+    } 
+`
+
+const ContaineredInfiniteSpinner = styled(Icon)`
+    color: #ccc;
+    font-size: 1.1em;
+`
+
 class DesktopSearchBar extends Component {
     state = { 
         shrink: true,
@@ -81,7 +105,8 @@ class DesktopSearchBar extends Component {
         hideBox: true,
         errorMessage: "",
         totalResults: "",
-        movies: []
+        movies: [],
+        singleMediaLoading: false
     }
 
     increaseSize () {
@@ -186,6 +211,15 @@ class DesktopSearchBar extends Component {
             )
             
         }
+        else if(this.state.singleMediaLoading) {
+            return (
+                <SpinnerContainer>
+                    <AnimationContainer>
+                        <ContaineredInfiniteSpinner icon="spinner9"/>
+                    </AnimationContainer>
+                </SpinnerContainer>
+            )
+        }
         else if(this.state.movies.length) {
             
             return (
@@ -200,22 +234,35 @@ class DesktopSearchBar extends Component {
         }
     }
 
-    fetchMediaDetails = async (title) => {
+    fetchMediaDetails = async (title, type) => {
         const { dispatch, history: { push }, service } = this.props;
 
         try {
+
+            this.setState({
+                loadingSingleMedia: true
+            })
+
             const response = await service.searhMovieDetails(title);
+            const youtubeInfo = await SearchMovieTrailer.searchMovieInfo(`${title} ${type} official trailer`);
+            const youtubeVideo = await SearchMovieTrailer.getMovieVideo(youtubeInfo.data.items[0].id.videoId)
+
+            this.setState({
+                loadingSingleMedia: false
+            })
+
             dispatch({
                 type: SET_SINGLE_MEDIA.SUCCESS,
                 payload: {
-                    singleMedia: response.data
+                    singleMedia: response.data,
+                    singleMediaTrailer: youtubeVideo.data.items[0]
                 }
             })
             push('/singleMedia')
         } catch(e) {
             console.error(e)
         } 
-    }    
+    }  
 
     renderItem = () => this.state.movies.map((element, index) => (
         <Item 

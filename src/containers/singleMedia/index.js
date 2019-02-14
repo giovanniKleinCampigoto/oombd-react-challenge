@@ -82,7 +82,7 @@ const ImdbRating = styled.span`
     align-items: center;
     background: ${props => props.background ? props.background : '#ccc'};
     height: 50px;
-    width: 50px;
+    min-width: 50px;
     border-radius: 50%;
 `
 
@@ -95,8 +95,6 @@ const ErrorMsg = styled.p`
     font-size: 1.2em;
     font-weight: bold;
 `
-
-
 const scale = (value) => {
     const rounded = Math.ceil(value)
 
@@ -109,6 +107,29 @@ const scale = (value) => {
     }
 }
 
+const TrailerWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
+
+const TrailerSeparator = styled.label`
+    margin: 15px;
+    width: 100%;
+    color: white;
+    font-size: 1em;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+`
+
+const EmbededIFrame = styled.div`
+    iframe {
+        max-width: 330px;
+        @media only screen and (min-width: 1024px) {
+            max-width: 600px;
+        }
+    }
+`
 const SingleMedia = ({ mediaReducer, history }) => (
     (Object.values(mediaReducer.singleMedia).length && mediaReducer.singleMedia.Response !== "False") ?
     (
@@ -144,6 +165,10 @@ const SingleMedia = ({ mediaReducer, history }) => (
                     <Label>Production:</Label>
                     <GeneralInfo>{mediaReducer.singleMedia.Production}</GeneralInfo>
                 </GeneralInfoWrapper>
+                <TrailerWrapper>
+                    <TrailerSeparator>Trailer</TrailerSeparator>
+                    <EmbededIFrame dangerouslySetInnerHTML={{__html: mediaReducer.singleMediaTrailer.player.embedHtml}}/>                    
+                </TrailerWrapper>   
                 <BackButton onClick={() => history.goBack()}>Back</BackButton>
             </SingleMediaWrapper>
         </Wrapper>

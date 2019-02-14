@@ -7,6 +7,7 @@ import Footer from '../components/layout/footer';
 import NotFound from '../containers/notFound';
 import FullResultsPage from '../containers/fullResultsPage';
 import SingleMediaPage from '../containers/singleMedia';
+import About from '../containers/about';
 
 const Routes = () => (
     <Router>
@@ -16,6 +17,7 @@ const Routes = () => (
                 <Route exact path="/" component={Home} />
                 <Route exact path="/fullList" component={FullResultsPage} />
                 <Route exact path="/singleMedia" component={SingleMediaPage}/>
+                <Route exact path="/about" component={About}/>
                 <Route component={NotFound}/>
             </Switch>
         <Footer/>

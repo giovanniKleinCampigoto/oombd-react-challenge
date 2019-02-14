@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+
 import Icon from '../../components/general/icon';
 
 import Movie from '../../components/dataDisplay/movie';
@@ -50,6 +51,8 @@ const InfiniteSpinner = styled(Icon)`
     color: #ccc;
     font-size: 1.1em;
 `
+
+
 
 class DesktopHome extends Component {
     state = { 
@@ -125,6 +128,7 @@ class DesktopHome extends Component {
         const { mediaReducer } = this.props
         return (
             <DesktopWrapper>
+                
                 {this.state.loadingSingleMedia ?
                     (
                         <SpinnerContainer>
@@ -136,7 +140,7 @@ class DesktopHome extends Component {
                     :
                     (
                         <React.Fragment>
-                            <Title>Sugested Media!</Title>
+                            <Title>My Personal Sugestion</Title>
                             <MediaWrapper>
                                 {this.renderSugestedMedia()}                    
                             </MediaWrapper>

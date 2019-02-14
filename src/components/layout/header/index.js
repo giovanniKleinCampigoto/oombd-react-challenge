@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import logo from '../../../assets/logo/logo.svg';
+import { Link } from 'react-router-dom';
 
 import DesktopSearchBar from '../../dataEntry/desktopSearchBar';
 import SearchMovieService from '../../../services/searchMovie';
@@ -51,6 +52,16 @@ const StyledSearchBar = styled(DesktopSearchBar)`
     display: ${window.innerWidth < 1024 ? 'none' :  'block'};
 `
 
+const SearchBarWrapper = styled.div`
+    width: 300px;
+`
+
+const AboutLink = styled(Link)`
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+`
+
 
 class Header extends Component {
     
@@ -67,9 +78,12 @@ class Header extends Component {
                             Db
                         </TitleSecondPart>
                     </header>
-                </Clickable>
-                <StyledSearchBar
-                    service={SearchMovieService} />
+                </Clickable> 
+                <SearchBarWrapper>
+                    <StyledSearchBar
+                        service={SearchMovieService} />
+                </SearchBarWrapper>              
+                <AboutLink to="/about">About</AboutLink>
             </StyledHeader>
         );   
     }

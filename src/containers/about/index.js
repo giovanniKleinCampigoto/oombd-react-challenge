@@ -14,6 +14,7 @@ const PageTitle = styled.h1`
 
 const TestDescription = styled.div`
     color: white;
+    padding: 15px;
 `
 
 const Link = styled.a`
@@ -23,12 +24,20 @@ const LogoWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 15px;
+    @media screen and (min-width: 768px) {
+        margin-bottom: 0;
+    }
 `
 
 const LogoContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-direction: column;
+    @media screen and (min-width: 768px) {
+        flex-direction: row;
+    }
 `
 
 const ReactLogo = styled.img`

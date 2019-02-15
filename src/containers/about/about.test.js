@@ -1,5 +1,5 @@
 import React from 'react'
-import {fireEvent, cleanup, waitForElement} from 'react-testing-library'
+import { fireEvent, cleanup, waitForElement } from 'react-testing-library'
 import render from '../../utils/render';
 
 test('foo', () => {
@@ -7,6 +7,5 @@ test('foo', () => {
 
     const { getByText, debug } = render(<button>Foo</button>);
 
-    debug()
     expect(getByText(buttonText)).toBeInTheDocument();
 });

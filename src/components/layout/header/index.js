@@ -60,6 +60,10 @@ const AboutLink = styled(Link)`
     color: white;
     font-weight: bold;
     text-decoration: none;
+    padding: 0 15px;
+    @media screen and (min-width: 768px) {
+        padding: 0;
+    }
 `
 
 

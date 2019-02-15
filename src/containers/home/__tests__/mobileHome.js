@@ -11,7 +11,7 @@ const movie = {
     Poster: "mockImage"
 }
 
-describe('<DesktopHome />', () => {
+describe('<MobileHome />', () => {
     afterEach(() => {
         axiosMock.get.mockReset();
     });  
@@ -25,7 +25,6 @@ describe('<DesktopHome />', () => {
 
         const { getByTestId, queryByTestId, queryByText, getAllByPlaceholderText, debug } = render(<MobileHome />);
 
-        debug();
         // await waitForElement(() => queryByText(movie.Title));
         expect(queryByTestId("mobile-searchbar")).toBeInTheDocument();
         // expect(axiosMock.get).toHaveBeenCalledTimes(1)

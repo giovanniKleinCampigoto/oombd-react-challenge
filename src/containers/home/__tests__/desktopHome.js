@@ -1,7 +1,9 @@
 import React from 'react'
 import render from '../../../utils/render';
 import DesktopHome from '../desktopHome';
+import App from '../../app'
 import axiosMock from 'axios';
+import { fireEvent, waitForElement } from 'react-testing-library';
 
 const movie = { 
     Title: "Iron Man",
@@ -21,14 +23,18 @@ describe('<DesktopHome />', () => {
             data: { Search: [movie]}
         })
 
-        const searchInput = /search.../i
+        const searchBarPlaceholder = /search.../i
 
-        const { getByTestId, queryByTestId, queryByText, getAllByPlaceholderText, debug } = render(<DesktopHome />);
+        const { queryByPlaceholderText, debug, queryByText } = render(<App />);
 
-        debug();
+        const searchBar = queryByPlaceholderText(searchBarPlaceholder)
 
-        
+        fireEvent.change(searchBar, { target: { value: 'Iron'}})
+
+        expect(searchBar.value).toBe('Iron')
         // await waitForElement(() => queryByText(movie.Title));
-        expect(axiosMock.get).toHaveBeenCalledTimes(1)
+        // expect().toBeInTheDocument();
+        expect(searchBar).toBeInTheDocument();
+        // expect(axiosMock.get).toHaveBeenCalledTimes(1);
     });
 })

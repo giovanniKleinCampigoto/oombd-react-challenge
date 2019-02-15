@@ -116,7 +116,7 @@ class MobileSearchBar extends Component {
         const { shrink } = this.state;
 
         return (
-            <SearchBarWrapper className={this.props.className} width={shrink ? '125px' : '100%'}>
+            <SearchBarWrapper data-test="mobile-searchbar" className={this.props.className} width={shrink ? '125px' : '100%'}>
                 <SearchBarInput
                     placeholder="Search..."
                     onKeyUp={e => this.debounce(e.target.value)}

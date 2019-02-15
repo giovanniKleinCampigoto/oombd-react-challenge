@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {  Switch, Route } from 'react-router-dom';
 
 import Home from '../containers/home';
 import Header from '../components/layout/header';
@@ -10,8 +10,7 @@ import SingleMediaPage from '../containers/singleMedia';
 import About from '../containers/about';
 
 const Routes = () => (
-    <Router>
-        <React.Fragment>
+    <React.Fragment>
         <Header/>
             <Switch>
                 <Route exact path="/" component={Home} />
@@ -21,8 +20,7 @@ const Routes = () => (
                 <Route component={NotFound}/>
             </Switch>
         <Footer/>
-        </React.Fragment>
-    </Router>
+    </React.Fragment>
 )
 
 export default Routes;

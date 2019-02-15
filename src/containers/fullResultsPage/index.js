@@ -166,7 +166,7 @@ class FullResultsPage extends Component {
                         )
                         :
                         (
-                            <MovieWrapper>
+                            <MovieWrapper id="movie-render">
                                 {
                                     movies.results.map((el, index) => (
                                         <Movie

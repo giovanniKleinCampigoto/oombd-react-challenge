@@ -130,7 +130,7 @@ const EmbededIFrame = styled.div`
 const SingleMedia = ({ mediaReducer, history }) => (
     (Object.values(mediaReducer.singleMedia).length && mediaReducer.singleMedia.Response !== "False") ?
     (
-        <Wrapper>
+        <Wrapper id="single-media">
             <div>
                 <MediaPoster src={mediaReducer.singleMedia.Poster} />
             </div>

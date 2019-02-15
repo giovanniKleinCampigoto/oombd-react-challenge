@@ -1,11 +1,18 @@
 import React from 'react'
 import { fireEvent, cleanup, waitForElement } from 'react-testing-library'
 import render from '../../utils/render';
+import App from '../app/index';
 
-test('foo', () => {
-    const buttonText = /foo/i;
+test('it is in the home component and  clicking on the link goes to the about page', () => {
+    const headerText = /about/i;
+    const pageHeader = /thank you/i
 
-    const { getByText, debug } = render(<button>Foo</button>);
+    const { getByText, debug } = render(<App/>);
 
-    expect(getByText(buttonText)).toBeInTheDocument();
+    const leftClick = { button: 0}
+    const aboutHeader = getByText(headerText);
+
+    fireEvent.click(aboutHeader, leftClick);
+    expect(getByText(pageHeader)).toBeInTheDocument();    
+
 });

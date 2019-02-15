@@ -18,11 +18,11 @@ function render(
   ) {
     return {
       ...rtlRender(
-        <Router history={history}>
           <Provider store={store}>
-            {ui}
-          </Provider>
-        </Router>),
+            <Router history={history}>
+              {ui}
+            </Router>
+          </Provider>),
       store,
       history,
     }

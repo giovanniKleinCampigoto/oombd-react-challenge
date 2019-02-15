@@ -266,7 +266,7 @@ class DesktopSearchBar extends Component {
 
     renderItem = () => this.state.movies.map((element, index) => (
         <Item 
-            onClick={() => this.fetchMediaDetails(element.Title)}
+            onClick={() => this.fetchMediaDetails(element.Title, element.Type)}
             name={element.Title}
             year={element.Year}
             img={element.Poster}

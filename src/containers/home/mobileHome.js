@@ -190,7 +190,7 @@ class MobileHome extends Component {
         const { mediaReducer : { movies }} = this.props
 
         return (
-            <MobileWrapper>
+            <MobileWrapper data-testid="mobile-home">
                 <MobileSearchBar
                     service={SearchMovieService}
                     results={this.getResults}/>

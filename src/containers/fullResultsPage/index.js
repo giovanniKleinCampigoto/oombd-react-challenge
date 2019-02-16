@@ -29,14 +29,14 @@ const FullListWrapper = styled.div`
 const MediaWrapper = styled.div`
     padding: 15px 0;
     min-height: 50px;
+    
+`
+
+const MovieWrapper = styled.div`
     @media screen and (min-width: 768px) {
         padding: 0;
         columns: ${props => props.loading ? '1' : '2'};
     }
-`
-
-const MovieWrapper = styled.div`
-
 `
 
 const ErrorMessage = styled.p`

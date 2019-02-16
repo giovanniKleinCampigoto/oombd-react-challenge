@@ -164,7 +164,7 @@ const SingleMedia = ({ mediaReducer, history }) => (
                 </GeneralInfoWrapper>
                 <TrailerWrapper>
                     <TrailerSeparator>Trailer</TrailerSeparator>
-                    <EmbededIFrame dangerouslySetInnerHTML={{__html: mediaReducer.singleMediaTrailer.player.embedHtml}}/>                    
+                    <EmbededIFrame data-testid="trailer" dangerouslySetInnerHTML={{__html: mediaReducer.singleMediaTrailer.player.embedHtml}}/>                    
                 </TrailerWrapper>   
                 <BackButton onClick={() => history.goBack()}>Back</BackButton>
             </SingleMediaWrapper>

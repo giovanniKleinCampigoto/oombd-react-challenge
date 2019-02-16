@@ -126,7 +126,7 @@ class DesktopHome extends Component {
 
     render() {
         return (
-            <DesktopWrapper>
+            <DesktopWrapper data-testid="desktop-home">
                 
                 {this.state.loadingSingleMedia ?
                     (

@@ -168,6 +168,50 @@ describe('<MobileHome />', () => {
             .mockResolvedValueOnce({
                 data: { Search: [movie2], totalResults: 1 }
             })
+            .mockResolvedValueOnce({
+                data: single
+            })
+            .mockResolvedValueOnce({
+                data: ytMockInfo
+            })
+            .mockResolvedValueOnce({
+                data: ytMockVideo
+            })
+    
+        const { debug, queryByText, getByTestId, queryByTestId } = render(<App />);
+
+        const searchBar = getByTestId("mobile-searchbar");
+        fireEvent.change(searchBar, { target: { value: 'Iron'}});
+        expect(searchBar.value).toBe('Iron');
+        
+        await waitForElement(() => queryByText(movie2.Title));       
+        
+        const link = queryByTestId("full-list-link");
+
+        const leftClick = { button: 0 }
+        fireEvent.click(link, leftClick);
+        
+        expect(queryByTestId("full-list-page")).toBeInTheDocument();
+
+        const singleMedia = queryByText(/iron man/i)
+        fireEvent.click(singleMedia, leftClick);
+        
+        await wait(() =>
+            expect(queryByTestId('loading-icon')).not.toBeInTheDocument()
+        );
+
+        expect(queryByTestId("single-media")).toBeInTheDocument();      
+        expect(queryByTestId("mobile-searchbar")).not.toBeInTheDocument();
+        expect(queryByTestId("loading-icon")).not.toBeInTheDocument();  
+        expect(queryByTestId("trailer")).toBeInTheDocument();  
+        expect(axiosMock.get).toHaveBeenCalledTimes(4);
+    })
+
+    it('it queries for a movie, and clicks on fullList page, then clicks on a media and goes to single media page', async () => {
+        axiosMock.get
+            .mockResolvedValueOnce({
+                data: { Search: [movie2], totalResults: 1 }
+            })
     
         const { debug, queryByText, getByTestId, queryByTestId } = render(<App />);
 
@@ -185,11 +229,11 @@ describe('<MobileHome />', () => {
         expect(queryByTestId("full-list-page")).toBeInTheDocument();
 
         expect(queryByTestId("mobile-searchbar")).not.toBeInTheDocument();
-        expect(queryByTestId("loading-icon")).not.toBeInTheDocument();        
+             
         expect(axiosMock.get).toHaveBeenCalledTimes(1);
     })
 
-    it('it queries for a movie, and clicks on fullList page, then browses the pages', async () => {
+    it('it queries for a movie, and clicks on fullList page, then goes to the next page', async () => {
         axiosMock.get
             .mockResolvedValueOnce({
                 data: { Search: [movie2], totalResults: 20 }
@@ -217,19 +261,99 @@ describe('<MobileHome />', () => {
 
         const nextPage = queryByTestId("next-page");
         fireEvent.click(nextPage, leftClick);
-        debug()
-        // expect(paginationComponent.value).toBe('2');
+        
         await wait(() =>
-            expect(queryByText(movie3.Title)).to.toBeInTheDocument()
+            expect(queryByText(movie2.Title)).not.toBeInTheDocument()
+        );
+        
+        expect(queryByText(movie3.Title)).toBeInTheDocument();
+        expect(queryByText(movie2.Title)).not.toBeInTheDocument();
+        expect(axiosMock.get).toHaveBeenCalledTimes(2);
+    })
+
+    it('it queries for a movie, and clicks on fullList page, then goes to the next page and back to the previous page', async () => {
+        axiosMock.get
+            .mockResolvedValueOnce({
+                data: { Search: [movie2], totalResults: 20 }
+            })
+            .mockResolvedValueOnce({
+                data: { Search: [movie3], totalResults: 20 }
+            })
+            .mockResolvedValueOnce({
+                data: { Search: [movie2], totalResults: 20 }
+            })
+            
+    
+        const { debug, queryByText, getByTestId, queryByTestId } = render(<App />);
+
+        const searchBar = getByTestId("mobile-searchbar");
+        fireEvent.change(searchBar, { target: { value: 'Iron'}});
+        expect(searchBar.value).toBe('Iron');
+        
+        await waitForElement(() => queryByText(movie2.Title));       
+        
+        const link = queryByTestId("full-list-link");
+
+        const leftClick = { button: 0 }
+        fireEvent.click(link, leftClick);
+        
+        expect(queryByTestId("full-list-page")).toBeInTheDocument();
+        expect(queryByTestId("mobile-searchbar")).not.toBeInTheDocument();
+
+        const nextPage = queryByTestId("next-page");
+        fireEvent.click(nextPage, leftClick);
+        
+        await wait(() =>
+            expect(queryByText(movie2.Title)).not.toBeInTheDocument()
         );
 
+        const previousPage = queryByTestId("previous-page");
+        fireEvent.click(previousPage, leftClick);
 
+        await wait(() =>
+            expect(queryByText(movie3.Title)).not.toBeInTheDocument()
+        );
+        
+        expect(queryByText(movie2.Title)).toBeInTheDocument();
+        expect(queryByText(movie3.Title)).not.toBeInTheDocument();
+        expect(axiosMock.get).toHaveBeenCalledTimes(3);
+    })
 
+    it('it queries for a movie, and clicks on fullList page, then browses the next page using the input', async () => {
+        axiosMock.get
+            .mockResolvedValueOnce({
+                data: { Search: [movie2], totalResults: 20 }
+            })
+            .mockResolvedValueOnce({
+                data: { Search: [movie3], totalResults: 20 }
+            })            
+    
+        const { debug, queryByText, getByTestId, queryByTestId } = render(<App />);
 
-        // expect(queryByText(movie3.Title)).toBeInTheDocument();
-        // expect(queryByText(movie2.Title)).not.toBeInTheDocument();
+        const searchBar = getByTestId("mobile-searchbar");
+        fireEvent.change(searchBar, { target: { value: 'Iron'}});
+        expect(searchBar.value).toBe('Iron');
+        
+        await waitForElement(() => queryByText(movie2.Title));       
+        
+        const link = queryByTestId("full-list-link");
 
-        // expect(queryByTestId("loading-icon")).not.toBeInTheDocument();        
+        const leftClick = { button: 0 }
+        fireEvent.click(link, leftClick);
+        
+        expect(queryByTestId("full-list-page")).toBeInTheDocument();
+        expect(queryByTestId("mobile-searchbar")).not.toBeInTheDocument();
+
+        const paginationComponent = queryByTestId("pagination-component");
+        fireEvent.change(paginationComponent, { target: { value: '2'}});
+        expect(paginationComponent.value).toBe('2');
+        
+        await wait(() =>
+            expect(queryByText(movie2.Title)).not.toBeInTheDocument()
+        );
+        
+        expect(queryByText(movie3.Title)).toBeInTheDocument();
+        expect(queryByText(movie2.Title)).not.toBeInTheDocument();
         expect(axiosMock.get).toHaveBeenCalledTimes(2);
     })
 })

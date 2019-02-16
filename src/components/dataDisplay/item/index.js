@@ -45,10 +45,10 @@ const Year = styled.p`
 
 `
 
-const Item = ({ className, name, img, year, onClick }) => (
+const Item = ({ className, name, img, year, onClick, dataTestId }) => (
     <ItemWrapper className={className}>
         {img ? <Image src={img} alt={name}/> : null}
-        <DescriptionWrapper onClick={onClick}>
+        <DescriptionWrapper data-testid={dataTestId} onClick={onClick}>
             <Description>
                 <MovieTitle>{name}</MovieTitle>
                 <Year>{year}</Year>

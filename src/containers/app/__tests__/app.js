@@ -17,7 +17,7 @@ describe('<App />', () => {
         const { queryByTestId } = render(<App/>, {
             route: '/fullList'
         });
-    
+
         expect(queryByTestId('movie-renderer')).not.toBeInTheDocument()
     });
     

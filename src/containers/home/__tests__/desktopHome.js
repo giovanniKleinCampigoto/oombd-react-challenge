@@ -36,9 +36,12 @@ describe('<DesktopHome />', () => {
 
         const searchBar = getByTestId("desktop-searchbar");
 
+        fireEvent.click(searchBar, { button: 0 });
+
         fireEvent.change(searchBar, { target: { value: 'Iron'}});
 
         expect(searchBar.value).toBe('Iron');
+
         expect(searchBar).toBeInTheDocument();
     });
 })

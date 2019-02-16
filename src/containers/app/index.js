@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-
-
 import Routes from '../../routes';
   
 const AppWrapper = styled.section`

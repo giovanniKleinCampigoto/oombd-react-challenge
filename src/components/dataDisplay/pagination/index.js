@@ -52,8 +52,6 @@ class Pagination extends Component {
         
         if(value < 1 || value > this.props.totalPageNumber || value === currentPage) return
 
-        console.log(value)
-
         nextPage(value)
     }
 
@@ -62,10 +60,11 @@ class Pagination extends Component {
         return (
         <PaginationWrapper>
             <InputWrapper>
-                <LeftArrow icon="play3" onClick={() => previousPage(currentPage - 1  === 0 ? 1 : currentPage - 1)}/>
+                <LeftArrow dataTestid="previous-page" icon="play3" onClick={() => previousPage(currentPage - 1  === 0 ? 1 : currentPage - 1)}/>
                     <Input 
+                        data-testid="pagination-component"
                         onChange={e => this.debounce(e.target.value)}/>
-                <Arrow icon="play3" onClick={() => nextPage(currentPage + 1  > totalPageNumber ? totalPageNumber : currentPage + 1)}/>
+                <Arrow dataTestid="next-page" icon="play3" onClick={() => nextPage(currentPage + 1  > totalPageNumber ? totalPageNumber : currentPage + 1)}/>
             </InputWrapper>
             <PageNumbers>{`${currentPage} of ${totalPageNumber}`}</PageNumbers>
         </PaginationWrapper>        

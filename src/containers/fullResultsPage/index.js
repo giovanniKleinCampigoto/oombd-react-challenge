@@ -191,7 +191,7 @@ class FullResultsPage extends Component {
 
         return (
             <Grid>
-                <FullListWrapper>
+                <FullListWrapper data-testid="full-list-page">
                     {!movies.results.length ? null : <Pagination nextPage={this.getPage} previousPage={this.getPage} currentPage={movies.currentPage} totalPageNumber={movies.pages}/>}
                     <MediaWrapper>
                         {this.renderMovies()}

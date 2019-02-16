@@ -130,7 +130,7 @@ class DesktopHome extends Component {
                 
                 {this.state.loadingSingleMedia ?
                     (
-                        <SpinnerContainer>
+                        <SpinnerContainer data-testid="loading-icon">
                             <AnimationContainer>
                                 <InfiniteSpinner icon="spinner9"/>
                             </AnimationContainer>

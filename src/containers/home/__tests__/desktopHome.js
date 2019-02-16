@@ -23,18 +23,22 @@ describe('<DesktopHome />', () => {
             data: { Search: [movie]}
         })
 
-        const searchBarPlaceholder = /search.../i
+        const { debug, queryByText, getByTestId } = render(<DesktopHome />);
 
-        const { queryByPlaceholderText, debug, queryByText } = render(<App />);
+        await waitForElement(() => queryByText(movie.Title));
+    
+        expect(axiosMock.get).toHaveBeenCalledTimes(1);
+    });
 
-        const searchBar = queryByPlaceholderText(searchBarPlaceholder)
+    it('it is in the home component has a search bar component', async () => {
 
-        fireEvent.change(searchBar, { target: { value: 'Iron'}})
+        const { debug, queryByText, getByTestId } = render(<App />);
 
-        expect(searchBar.value).toBe('Iron')
-        // await waitForElement(() => queryByText(movie.Title));
-        // expect().toBeInTheDocument();
+        const searchBar = getByTestId("desktop-searchbar");
+
+        fireEvent.change(searchBar, { target: { value: 'Iron'}});
+
+        expect(searchBar.value).toBe('Iron');
         expect(searchBar).toBeInTheDocument();
-        // expect(axiosMock.get).toHaveBeenCalledTimes(1);
     });
 })

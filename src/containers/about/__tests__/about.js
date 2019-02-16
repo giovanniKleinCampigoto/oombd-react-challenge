@@ -1,7 +1,7 @@
 import React from 'react'
 import { fireEvent, cleanup, waitForElement } from 'react-testing-library'
-import render from '../../utils/render';
-import App from '../app/index';
+import render from '../../../utils/render';
+import App from '../../app/index';
 
 test('it is in the home component and  clicking on the link goes to the about page', () => {
     const headerText = /about/i;
@@ -13,6 +13,5 @@ test('it is in the home component and  clicking on the link goes to the about pa
     const aboutHeader = getByText(headerText);
 
     fireEvent.click(aboutHeader, leftClick);
-    expect(getByText(pageHeader)).toBeInTheDocument();    
-
+    expect(getByText(pageHeader)).toBeInTheDocument();  
 });

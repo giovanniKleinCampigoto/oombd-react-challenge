@@ -223,7 +223,7 @@ class DesktopSearchBar extends Component {
         else if(this.state.movies.length) {
             
             return (
-                <ResultBox hide={this.state.hideBox}>                
+                <ResultBox data-testid="result-box" hide={this.state.hideBox}>                
                     {this.renderItem()}
                     <LinkWrapper>
                         <AndMore>And more {this.state.totalResults}...</AndMore>
@@ -279,9 +279,10 @@ class DesktopSearchBar extends Component {
         return (
             <SearchBarWrapper className={this.props.className} width={shrink ? '125px' : '290px'}>
                 <SearchBarInput
+                    data-testid="desktop-searchbar"
                     width={shrink ? '90px' : '270px'}
                     placeholder="Search..."
-                    onKeyUp={e => this.debounce(e.target.value)}
+                    onChange={e => this.debounce(e.target.value)}
                     onFocus={() => this.increaseSize()}
                     onBlur={() => this.decreaseSize()}/>
                 {this.state.loading ? <InfiniteSpinner icon="spinner9"/> : <SearchIcon icon="search"/>}                

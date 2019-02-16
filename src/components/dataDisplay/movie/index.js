@@ -54,7 +54,7 @@ const Year = styled.p`
 
 const Movie = ({ className, name, img, year, onClick, type }) => (
     <ItemWrapper className={className}>
-        <DescriptionWrapper onClick={onClick}>
+        <DescriptionWrapper data-testid="movie" onClick={onClick}>
             {img !== 'N/A' ? <Image src={img} alt={name}/> : null}
             <Description>
                 <MovieTitle>{name}</MovieTitle>

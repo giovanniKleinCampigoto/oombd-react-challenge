@@ -137,6 +137,7 @@ class MobileHome extends Component {
                 }
             })
             push('/singleMedia')
+
         } catch(e) {
             console.error(e)
         } 
@@ -157,7 +158,7 @@ class MobileHome extends Component {
                     {
                         this.state.loadingSingleMedia ? 
                         (
-                            <SpinnerContainer>
+                            <SpinnerContainer data-testid="loading-icon">
                                 <AnimationContainer>
                                     <InfiniteSpinner icon="spinner9"/>
                                 </AnimationContainer>
@@ -200,7 +201,7 @@ class MobileHome extends Component {
                                 <TotalResults>
                                     {`Total Results: ${movies.totalResults}`}
                                 </TotalResults>
-                                <ClickHere to="/fullList">
+                                <ClickHere data-testid="full-list-link" to="/fullList">
                                     Full list here!
                                 </ClickHere>
                             </LinkWrapper>

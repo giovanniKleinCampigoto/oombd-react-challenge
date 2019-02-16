@@ -1,4 +1,4 @@
 module.exports = {
-    setupTestFrameworkScriptFile: require.resolve('./setupTests.js'),
-    // ... other options ...
-  }
+  setupTestFrameworkScriptFile: require.resolve('./setupTests.js'),
+  // ... other options ...
+}

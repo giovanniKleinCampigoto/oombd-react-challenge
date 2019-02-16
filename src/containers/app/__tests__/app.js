@@ -1,6 +1,6 @@
 import React from 'react'
-import render from '../../utils/render';
-import App from '../app/index';
+import render from '../../../utils/render';
+import App from '../index';
 
 
 describe('<App />', () => {
